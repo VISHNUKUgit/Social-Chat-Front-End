@@ -77,10 +77,10 @@ const SignInUp = ({ setForgetPassword, forgetPassword, forSignIn, setForSignIn }
                         toast.success("Login successful!");
                         navigate('/chat');
                     } else {
-                        toast.error(`Login failed: ${result.response.data}`);
+                        toast.error(`Login failed: ${result}`);
                     }
                 } catch (error) {
-                    console.error("Error during login:", error);
+                    console.log("Error during login:", error);
                     toast.error(`Login failed: ${error}`);
                 } finally {
                     setIsLoading(false);
