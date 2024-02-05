@@ -21,7 +21,8 @@ function App() {
    setScreenSize(screenWidth)
  });
 
- const socket = socketIO.connect('https://social-chat-server.onrender.com');
+//  const socket = socketIO.connect('https://social-chat-server.onrender.com');
+const socket = socketIO.connect('http://localhost:4000');
  useEffect(() => {
   if (socket) {
     dispatch(setSocket(socket));

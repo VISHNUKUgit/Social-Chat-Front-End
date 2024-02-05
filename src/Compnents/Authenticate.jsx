@@ -18,8 +18,8 @@ const Authenticate = () => {
     }, [forgetPassword])
     // console.log(socket);
     return (
-        <div className='d-flex w-100 justify-content-center align-items-center'>
-            <div className='p-5 w-75 '>
+        <div className='d-flex vh-100 w-100 justify-content-center align-items-center'>
+            <div className='py-5 w-75 '>
                 {forgetPassword ?
                     <SignInUp forSignIn={forSignIn} setForSignIn={setForSignIn} setForgetPassword={setForgetPassword} forgetPassword={forgetPassword} />
                     :

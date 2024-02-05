@@ -92,9 +92,9 @@ const SignInUp = ({ setForgetPassword, forgetPassword, forSignIn, setForSignIn }
 
     return (
         <>
-            <div>
-                <h2>{forSignIn ? 'Sign Up' : 'Sign In'}</h2>
-                <p>{forSignIn && 'Sign up for free to access to any of our products'}</p>
+            <div className='w-100'>
+                <h2 className='text-center'>{forSignIn ? 'Sign Up' : 'Sign In'}</h2>
+                <p className='text-center'>{forSignIn && 'Sign up for free to access to any of our products'}</p>
                 <div className='d-flex flex-column'>
                     <button className='w-100 mt-4 btn  border border-dark'>
                         <img src={g} alt="" /> Continue With Google
