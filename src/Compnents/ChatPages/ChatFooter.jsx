@@ -8,8 +8,8 @@ const ChatFooter = () => {
     const currentUserString = sessionStorage.getItem("currentUser");
     const currentUser = currentUserString ? JSON.parse(currentUserString) : null;
     const sendMessage = async () => {
-        console.log(currentUser._id);
-        console.log(userData._id);
+        // console.log(currentUser._id);
+        // console.log(userData._id);
         if (message.trim() && currentUser.username) {
             // Emit a 'message' event to the server using the socket
             socket.emit('message', {

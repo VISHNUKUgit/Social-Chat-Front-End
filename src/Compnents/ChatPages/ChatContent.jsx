@@ -54,17 +54,7 @@ const ChatContent = () => {
 
     }
 
-    // const updateMessageStatus = async (recipientUserId) => {
-    //     try {
-    //         // Update the status of messages in the database
-    //         await apiCallToUpdateMessageStatus(recipientUserId);
-
-    //         // Trigger a re-render or update state in your React component
-    //         // Example: setMessages([...updatedMessages]);
-    //     } catch (error) {
-    //         console.error('Error updating messages:', error);
-    //     }
-    // };
+    
     socket && socket.on('messageResponse', () => setUpdate(!update));
 
     useEffect(() => {
