@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import socketIO from 'socket.io-client'
+import { Route, Routes } from 'react-router-dom'
+import LandingPage from './Pages/LandingPage'
+import Home from "./Pages/Home";
+import ChatPage from "./Pages/ChatPage";
+import { useEffect, useState } from 'react';
+import "react-toastify/dist/ReactToastify.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch } from 'react-redux';
+import { setSocket } from './Redux/slice';
 
 function App() {
+  const dispatch  = useDispatch()
+  // mobile sreen
+ 
+ const [screenSize, setScreenSize] = useState(window.innerWidth)
+ window.addEventListener('resize', function () {
+
+   const screenWidth = window.innerWidth;
+
+   setScreenSize(screenWidth)
+ });
+
+ const socket = socketIO.connect('https://social-chat-server.onrender.com');
+ useEffect(() => {
+  if (socket) {
+    dispatch(setSocket(socket));
+    console.log(socket);
+    
+  }
+}, [socket,dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+      <Route path="/" element={<LandingPage  />}/>
+      {/* <Route path="/" element={<LandingPage socket={socket} />}/> */}
+      <Route path="/chat" element={<Home/>}/>
+      {screenSize < 600 ? (
+          // Render ChatPage when screenSize is greater than 600
+          <Route path="/chat/id" element={<ChatPage />} />
+        ) : null}
+    </Routes>
+    </>
   );
 }
 
