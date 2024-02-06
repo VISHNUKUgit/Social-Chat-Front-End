@@ -11,6 +11,7 @@ export const commonRequest = async (method, url, data, headers) => {
 
     try {
         const result = await axios(reqConfig);
+        console.log(result);
         return result;
     } catch (error) {
         return error

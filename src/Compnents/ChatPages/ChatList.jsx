@@ -11,7 +11,6 @@ import Badge from 'react-bootstrap/Badge';
 
 const ChatList = ({ screenSize }) => {
   const socket = useSelector((state) => state.socialChat.socket)
-  const selectedUser = useSelector((state) => state.socialChat.selectedUser)
   const [update, setUpdate] = useState(true)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -55,8 +54,10 @@ const ChatList = ({ screenSize }) => {
 
   const handleUserClick = (user) => {
     if (screenSize > 600) {
+      setUpdate(!update)
       dispatch(setSelectedUser(user));
     } else {
+      setUpdate(!update)
       navigate('/chat/id');
       dispatch(setSelectedUser(user));
     }
@@ -64,7 +65,7 @@ const ChatList = ({ screenSize }) => {
   useEffect(() => {
     getUsers()
 
-  }, [searchValue, update, selectedUser])
+  }, [searchValue, update])
   console.log(userData);
 
   const formatDateHeader = (timestamp) => {
