@@ -7,6 +7,9 @@ export const register = async(data)=>{
 export const login = async(data)=>{
     return commonRequest('POST',`${serverURL}/user/login`,data,"")
 }
+export const googleAuth = async(data)=>{
+    return commonRequest('POST',`${serverURL}/user/googleAuth`,data,"")
+}
 
 export const getExistingUsersAPI = async(searchValue,reqHeader)=>{
     return commonRequest('GET',`${serverURL}/existingusers?search=${searchValue}`,null,reqHeader)

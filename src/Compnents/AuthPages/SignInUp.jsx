@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import g from '../assets/Google.jpg';
+import { useGoogleLogin } from '@react-oauth/google';
 import { login, register } from '../../Axios-Service/allRequset';
 import { toast, ToastContainer } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
@@ -9,12 +10,13 @@ import { useSelector } from 'react-redux';
 
 
 const SignInUp = ({ setForgetPassword, forgetPassword, forSignIn, setForSignIn }) => {
-    const socket = useSelector((state)=>state.socialChat.socket)
+    const socket = useSelector((state) => state.socialChat.socket)
 
 
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [userDetails, setUserDetails] = useState({ username: '', email: '', password: '' });
+    const [user, setUser] = useState([]);
     const navigate = useNavigate();
 
     const clearData = () => {
@@ -71,9 +73,10 @@ const SignInUp = ({ setForgetPassword, forgetPassword, forSignIn, setForSignIn }
                         // console.log(socket);
                         sessionStorage.setItem("id", socket.id);
                         // sends the username and socket ID to the Node.js server
-                        socket.emit('newUser', { userName:result.data.existingUser.username,
-                                                 socketID: socket.id
-                                                });
+                        socket.emit('newUser', {
+                            userName: result.data.existingUser.username,
+                            socketID: socket.id
+                        });
                         toast.success("Login successful!");
                         navigate('/chat');
                     } else {
@@ -90,15 +93,84 @@ const SignInUp = ({ setForgetPassword, forgetPassword, forSignIn, setForSignIn }
         clearData();
     };
 
+
+
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setUser(codeResponse),
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
+    const googleLogin = async (data) => {
+        const result = await googleLogin(data);
+
+        try {
+            if (result.status === 200) {
+                sessionStorage.setItem("currentUser", JSON.stringify(result.data.existingUser));
+                sessionStorage.setItem("token", JSON.stringify(result.data.token));
+                // console.log(socket);
+                sessionStorage.setItem("id", socket.id);
+                // sends the username and socket ID to the Node.js server
+                socket.emit('newUser', {
+                    userName: result.data.existingUser.username,
+                    socketID: socket.id
+                });
+                toast.success("Login successful!");
+                navigate('/chat');
+            } else {
+                toast.error(`Login failed: ${result}`);
+            }
+        }
+        catch (error) {
+            console.log("Error during login:", error);
+            toast.error(`Login failed: ${error}`);
+        }
+    }
+
+    useEffect(
+        () => {
+            if (user) {
+                fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                    headers: {
+                        Authorization: `Bearer ${user.access_token}`,
+                        Accept: 'application/json'
+                    }
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        googleLogin({ username: data.name, password: data.id, email: data.email })
+
+                    })
+                    .catch((error) => console.log(error));
+            }
+
+        },
+        [user]
+    );
+
     return (
         <>
             <div className='w-100'>
                 <h2 className='text-center'>{forSignIn ? 'Sign Up' : 'Sign In'}</h2>
                 <p className='text-center'>{forSignIn && 'Sign up for free to access to any of our products'}</p>
                 <div className='d-flex flex-column'>
-                    <button className='w-100 mt-4 btn  border border-dark'>
+                    <button className='w-100 mt-4 btn  border border-dark' onClick={() => login()} >
                         <img src={g} alt="" /> Continue With Google
                     </button>
+                    {/* <GoogleLogin
+                        width='100%'
+                        onSuccess={credentialResponse => {
+                            console.log(credentialResponse);
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                    /> */}
                 </div>
                 <hr />
                 <form onSubmit={handleSubmit}>

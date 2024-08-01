@@ -27,7 +27,6 @@ function App() {
   if (socket) {
     dispatch(setSocket(socket));
     console.log(socket);
-    
   }
 }, [socket,dispatch]);
 
