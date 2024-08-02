@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import g from '../assets/Google.jpg';
 import { useGoogleLogin } from '@react-oauth/google';
-import { login, register } from '../../Axios-Service/allRequset';
+import {  googleAuth, register } from '../../Axios-Service/allRequset';
 import { toast, ToastContainer } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -100,8 +100,8 @@ const SignInUp = ({ setForgetPassword, forgetPassword, forSignIn, setForSignIn }
         onError: (error) => console.log('Login Failed:', error)
     });
 
-    const googleLogin = async (data) => {
-        const result = await googleLogin(data);
+    const HandleGoogleLogin = async (data) => {
+        const result = await googleAuth(data);
 
         try {
             if (result.status === 200) {
@@ -142,9 +142,7 @@ const SignInUp = ({ setForgetPassword, forgetPassword, forSignIn, setForSignIn }
                         return response.json();
                     })
                     .then((data) => {
-                        console.log(data);
-                        googleLogin({ username: data.name, password: data.id, email: data.email })
-
+                        HandleGoogleLogin({ username: data.name, password: data.id, email: data.email,picture: data.picture})
                     })
                     .catch((error) => console.log(error));
             }

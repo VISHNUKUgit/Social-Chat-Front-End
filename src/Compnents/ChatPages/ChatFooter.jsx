@@ -24,7 +24,7 @@ const ChatFooter = () => {
         setMessage('');
     }
     return (
-        <div className='w-100 bg-dark  d-flex align-items-center' style={{ height: '10%' }}>
+        <div className='w-100 bg-dark  d-flex align-items-center justify-content-end' style={{ height: '10%' }}>
             <div className='px-3 w-75'>
                 <form className='d-flex' onSubmit={(e) => {
                     e.preventDefault();

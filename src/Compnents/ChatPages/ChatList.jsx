@@ -99,7 +99,23 @@ const ChatList = ({ screenSize }) => {
 
   return (
     <div className={`bg-dark py-2 px-3 ${screenSize > 600 ? 'w-25' : 'w-100'}`} style={{ height: '', overflowX: 'auto' }}  >
-      <h4 className='text-light'>userName</h4>
+      <div className='d-flex align-items-center py-1'>
+        <div
+          className='bg-light ms-2 d-flex justify-content-center align-items-center'
+          style={{
+            width: '45px',
+            height: '45px',
+            borderRadius: '50%',
+            overflow: 'hidden'
+          }}
+        >
+          {currentUser.picture !== 'default_profile_picture.jpg' && (
+            <img src={currentUser.picture} alt={currentUser.username} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          )}
+        </div>
+        <h4 className='text-light ps-1'>{currentUser.username}</h4>
+      </div>
+
       <InputGroup className="mb-3">
         <Form.Control
           placeholder="Sreach or start new Chat"
@@ -130,7 +146,7 @@ const ChatList = ({ screenSize }) => {
                       ? `${user.lastMessage.content.slice(0, 20)}...`
 
                       : user.lastMessage && user.lastMessage.content}
-                      <span style={{fontSize:'11px'}}>{user.lastMessage === null ? '' : formatDateHeader(user.lastMessage.timestamp)}</span>
+                    <span style={{ fontSize: '11px' }}>{user.lastMessage === null ? '' : formatDateHeader(user.lastMessage.timestamp)}</span>
                   </div>
 
                 </div>
