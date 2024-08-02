@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 function NavComponent() {
   const navigate = useNavigate()
   const handleLogout = () => {
-    console.log("ok");
     sessionStorage.removeItem("currentUser");
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("id");

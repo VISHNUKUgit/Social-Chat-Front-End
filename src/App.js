@@ -26,7 +26,6 @@ function App() {
  useEffect(() => {
   if (socket) {
     dispatch(setSocket(socket));
-    console.log(socket);
   }
 }, [socket,dispatch]);
 
