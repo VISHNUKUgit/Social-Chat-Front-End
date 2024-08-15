@@ -34,6 +34,9 @@ function NavComponent() {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <span style={{cursor:'pointer'}} onClick={handleLogout}>logout</span>
                 </Nav>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <span style={{cursor:'pointer'}} >Invite a friend</span>
+                </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>

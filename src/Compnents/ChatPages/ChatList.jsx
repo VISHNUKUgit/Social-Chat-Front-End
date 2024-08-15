@@ -136,7 +136,7 @@ const ChatList = ({ screenSize }) => {
                 key={user._id}
                 onClick={() => handleUserClick(user)}
                 style={{ cursor: 'pointer' }}
-                className="d-flex justify-content-between align-items-start"
+                className="d-flex justify-content-between align-items-start chatListButton"
               >
                 <div className="ms-2 me-auto w-100">
                   <div className="fw-bold"> {user.username}</div>
