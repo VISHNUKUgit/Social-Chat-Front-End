@@ -40,6 +40,7 @@ const ChatHeader = () => {
         )}
       </div>
       <h5 className='text-light ms-2 '>{userData.username}</h5>
+    
     </div>
   )
 }
